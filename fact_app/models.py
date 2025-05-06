@@ -1,13 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
+
 
 class Customer(models.Model):
     """
     Name: Customer model definition 
     """
     SEX_TYPES = (
-        ('M','Masculin'),
-        ('F','Feminin'),
+        ('M', _("Male")),
+        ('F', _("Feminine")),
     )
 
     name = models.CharField(max_length=132)
@@ -42,12 +44,11 @@ class Invoice(models.Model):
     """
     Name: Invoice model definition
     Description
-    author: sawasoul7188@icloud.com
     """
     INVOICE_TYPE = (
-        ('R','RECU'),
-        ('P','PROFANA FACTURE'),
-        ('F','FACTURE'),
+        ('R', _("RECEIPT")),
+        ('P', _("PR0FORMA FACTURE")),
+        ('I', _("INVOICE")),
     )
 
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
@@ -75,19 +76,16 @@ class Invoice(models.Model):
     
     @property
     def get_total(self):
-        articles = self.article_set.all()
-        total = sum(article.get_total for article in articles)
-
+        articles = self.articles.all()
+        total = sum(article.get_total or 0 for article in articles)
+        return total
     
     
 class Article(models.Model):
     """
     Name : Article model definition 
-    Description
-    author : sawasoul7188@icloud.com
-
     """
-    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name="articles")  # Ajout de related_name
 
     name = models.CharField(max_length=32)
 
@@ -103,9 +101,8 @@ class Article(models.Model):
 
     @property
     def get_total(self):
-        total = self.quantity + self.unit_price
+        total = self.quantity * self.unit_price
+        return total
 
 
 
-
-    

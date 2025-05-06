@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br><br><br><br>
+
+<h1 class="text-capitalize text-center mx-10 bg-dark text-white">{% trans "Register a new customer" %}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="form-row">
+        <div class="form-group col-md-6" >
+           <label for="name">{% trans "Name" %}</label>
+           <input name="name"required type="text" class="form-control" id="name" placeholder="{% trans "customer first and last name" %}">
+        </div>
+        <div class="form-group col-md-4" >
+            <label for="email">{% trans "Email" %}</label>
+            <input name="email"required type="email" class="form-control" id="email" placeholder="{% trans "customer email" %}">
+         </div>
+         <div class="form-group col-md-2" >
+            <label for="phone">{% trans "Phone" %}</label>
+            <input name="phone"required type="number" class="form-control" id="phone" placeholder="{% trans "customer phone number" %}">
+         </div>
+
+    
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="sex">{% trans "Sex" %}</label>
+            <select name="sex" class="form-control"    required id="sex">
+                <option>{% trans "Choose the gender .." %}</option>
+                <option value="M">{% trans "Male" %}</option>
+                <option value="F">{% trans "Feminine" %}</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="age">{% trans "Age" %}</label>
+            <select name="age" class="form-control" required id="age">
+                <option>{% trans "Choose the age range .." %}</option>
+                <option value="0-15">{% trans "0-15" %}</option>
+                <option value="0-15">{% trans "15-25" %}</option>
+            </select>
+        </div>
+        
+    </div> 
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="address">{% trans "Address" %}</label>
+            <input name="address" type="text" required type="text" class="form-control" id="address" placeholder="{% trans "Customer address" %}">
+        </div>
+
+    </div>  
+        <div class="form-row">
+            <div class="form-group col-md-4" >
+                <label for="city">{% trans "City" %}</label>
+                <input name="city"required type="city" class="form-control" id="city" placeholder="{% trans "customer city" %}">
+             </div>
+             <div class="form-group col-md-6" >
+                <label for="zip">{% trans "Zip code" %}</label>
+                <input name="zip"required type="zip" class="form-control" id="zip" placeholder="{% trans "customer zip code required" %}">
+             </div>
+        </div>
+        <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+   
+</form>
+<br><br><br>
+
+
+{% endblock content %}
